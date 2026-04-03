@@ -7,7 +7,7 @@ interface ShaderAnimationProps {
   className?: string;
 }
 
-export function ShaderAnimation({ className }: ShaderAnimationProps) {
+export default function ShaderAnimation({ className }: ShaderAnimationProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [mounted, setMounted] = useState(false)
   const sceneRef = useRef<{

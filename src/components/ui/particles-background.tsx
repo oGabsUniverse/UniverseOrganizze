@@ -5,7 +5,7 @@ import type { Engine } from "tsparticles-engine";
 import Particles from "react-tsparticles";
 import { loadSlim } from "tsparticles-slim";
 
-export function ParticlesBackground() {
+export default function ParticlesBackground() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

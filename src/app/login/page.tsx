@@ -37,11 +37,13 @@ export default function LoginPage() {
       setLoading(true);
       if (isRegistering) {
         initiateEmailSignUp(auth, email, password, (err) => {
+          console.error('Sign up error:', err);
           setLoading(false);
           toast({ variant: "destructive", title: "Erro ao criar conta", description: err.message });
         });
       } else {
         initiateEmailSignIn(auth, email, password, (err) => {
+          console.error('Sign in error:', err);
           setLoading(false);
           toast({ 
             variant: "destructive", 
@@ -58,6 +60,7 @@ export default function LoginPage() {
   const handleQuickAccess = () => {
     setLoading(true);
     initiateAnonymousSignIn(auth, (err) => {
+      console.error('Anonymous sign in error:', err);
       setLoading(false);
       toast({ variant: "destructive", title: "Erro no acesso rápido", description: err.message });
     });

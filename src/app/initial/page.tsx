@@ -24,16 +24,16 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const ShaderAnimation = dynamic(() => import("@/components/ui/shader-animation").then(mod => mod.ShaderAnimation), { 
+const ShaderAnimation = dynamic(() => import("@/components/ui/shader-animation"), { 
   ssr: false,
   loading: () => <div className="absolute inset-0 bg-black/20 animate-pulse" />
 });
 
-const ParticlesBackground = dynamic(() => import("@/components/ui/particles-background").then(mod => mod.ParticlesBackground), { 
+const ParticlesBackground = dynamic(() => import("@/components/ui/particles-background"), { 
   ssr: false 
 });
 
-const AnimatedBarChart3D = dynamic(() => import("@/components/ui/animated-bar-chart-3d").then(mod => mod.AnimatedBarChart3D), { 
+const AnimatedBarChart3D = dynamic(() => import("@/components/ui/animated-bar-chart-3d"), { 
   ssr: false,
   loading: () => <div className="h-[300px] w-full bg-white/5 rounded-[40px] animate-pulse" />
 });
@@ -63,6 +63,7 @@ export default function InitialPage() {
         const tDate = parseISO(t.date);
         return isWithinInterval(tDate, { start: monthStart, end: monthEnd });
       } catch (e) {
+        console.error('Date parsing error in filter:', e);
         return false;
       }
     });
@@ -97,6 +98,7 @@ export default function InitialPage() {
             try {
               return isWithinInterval(parseISO(t.date), { start, end });
             } catch (e) {
+              console.error('Date parsing error in chart filter (1m):', e);
               return false;
             }
           })
@@ -122,6 +124,7 @@ export default function InitialPage() {
           try {
             return isWithinInterval(parseISO(t.date), { start, end });
           } catch (e) {
+            console.error('Date parsing error in chart filter (multi-month):', e);
             return false;
           }
         })

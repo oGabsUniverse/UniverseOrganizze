@@ -20,7 +20,7 @@ interface AnimatedBarChart3DProps {
  * Gráfico de Barras 3D nativo via CSS High-Performance.
  * Otimizado para telas pequenas com gaps e tamanhos reduzidos.
  */
-export function AnimatedBarChart3D({ data, hideValues = false }: AnimatedBarChart3DProps) {
+export default function AnimatedBarChart3D({ data, hideValues = false }: AnimatedBarChart3DProps) {
   if (!data || data.length === 0) {
     return (
       <div className="h-[250px] sm:h-[300px] w-full flex items-center justify-center text-slate-400 italic bg-black/20 rounded-[24px] sm:rounded-[32px] border border-white/5 px-4 text-center text-xs">

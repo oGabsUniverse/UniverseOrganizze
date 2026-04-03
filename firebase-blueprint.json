@@ -1,0 +1,213 @@
+
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents an individual user within the financial management application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the User entity (UID)."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address.",
+          "format": "email"
+        },
+        "name": {
+          "type": "string",
+          "description": "The full name or display name of the user."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "admin"],
+          "description": "The user's role in the system. Admins have global access.",
+          "default": "user"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user account was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating the last time the user's information was updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "role",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Account": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Account",
+      "type": "object",
+      "description": "Represents a specific bank account or financial instrument.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Account entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "A user-friendly name for the account."
+        },
+        "initialBalance": {
+          "type": "number",
+          "description": "The balance of the account when it was first added."
+        },
+        "currency": {
+          "type": "string",
+          "description": "The currency used for this account."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User who owns this account."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Display name of the owner for UI grouping."
+        },
+        "color": {
+          "type": "string",
+          "description": "Hex color for UI identification."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "initialBalance",
+        "userId",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Transaction": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Transaction",
+      "type": "object",
+      "description": "Represents a single financial movement.",
+      "properties": {
+        "id": { "type": "string" },
+        "description": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string", format: "date-time" },
+        "type": { "type": "string", "enum": ["CREDITO", "DEBITO"] },
+        "frequency": { "type": "string", "enum": ["FIXO", "VARIAVEL"] },
+        "accountId": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "category": { "type": "string" },
+        "userId": { "type": "string" },
+        "status": { "type": "string" },
+        "isAIProcessed": { "type": "boolean" },
+        "explanation": { "type": "string" },
+        "createdAt": { "type": "string", format: "date-time" },
+        "updatedAt": { "type": "string", format: "date-time" }
+      },
+      "required": [
+        "id",
+        "description",
+        "amount",
+        "date",
+        "type",
+        "accountId",
+        "userId",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Investment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Investment",
+      "type": "object",
+      "description": "Represents a savings or investment item with yield tracking.",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["CDB", "FII", "STOCK", "CRYPTO"] },
+        "institution": { "type": "string" },
+        "appliedValue": { "type": "number" },
+        "currentValue": { "type": "number" },
+        "quantity": { "type": "number" },
+        "averagePrice": { "type": "number" },
+        "yieldType": { "type": "string", "enum": ["FIXED", "CDI", "IPCA", "VARIABLE"] },
+        "yieldRate": { "type": "number" },
+        "maturityDate": { "type": "string", "format": "date-time" },
+        "liquidity": { "type": "string" },
+        "sector": { "type": "string" },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "type", "appliedValue", "currentValue", "userId", "yieldType", "yieldRate", "createdAt", "updatedAt"]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "User profiles."
+        }
+      },
+      {
+        "path": "/users/{userId}/accounts/{accountId}",
+        "definition": {
+          "entityName": "Account",
+          "schema": {
+            "$ref": "#/backend/entities/Account"
+          }
+        }
+      },
+      {
+        "path": "/users/{userId}/transactions/{transactionId}",
+        "definition": {
+          "entityName": "Transaction",
+          "schema": {
+            "$ref": "#/backend/entities/Transaction"
+          }
+        }
+      },
+      {
+        "path": "/users/{userId}/investments/{investmentId}",
+        "definition": {
+          "entityName": "Investment",
+          "schema": {
+            "$ref": "#/backend/entities/Investment"
+          }
+        }
+      },
+      {
+        "path": "/users/{userId}/settings/budget",
+        "definition": {
+          "description": "Budget allocation settings."
+        }
+      }
+    ]
+  }
+}

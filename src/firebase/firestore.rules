@@ -1,0 +1,30 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Função auxiliar para verificar se o usuário é o dono dos dados
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // Função auxiliar para verificar se é o administrador master
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'admin@gmail.com';
+    }
+
+    // Regras para perfis de usuários
+    match /users/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+
+      // Permissão recursiva para todas as subcoleções (contas, transações, investimentos, etc.)
+      match /{allSubcollections=**} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+    }
+    
+    // Bloqueio padrão para qualquer outra coleção não especificada
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

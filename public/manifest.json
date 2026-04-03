@@ -1,0 +1,21 @@
+{
+  "name": "Universe Organizze",
+  "short_name": "Universe",
+  "description": "Seu controle financeiro futurista",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#5B0E8C",
+  "icons": [
+    {
+      "src": "https://picsum.photos/seed/universe/192/192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://picsum.photos/seed/universe/512/512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

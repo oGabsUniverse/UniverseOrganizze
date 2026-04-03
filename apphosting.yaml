@@ -1,0 +1,9 @@
+
+runConfig:
+  maxInstances: 1
+  minInstances: 0
+  memory: 1024MiB
+  cpu: 1
+env:
+  - variable: NODE_VERSION
+    value: 20
